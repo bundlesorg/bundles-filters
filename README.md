@@ -27,7 +27,7 @@
     <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/brikcss/bundles-filter.svg?style=flat-square" alt="Greenkeeper badge"></a>
 </p>
 
-This is a bundler plugin for use with [Bundles](https://github.com/brikcss/bundles-core) which filters output files for other bundles. It can either 1) remove files from `bundle.output`, or 2) run a series of bundlers on a filtered subset of `bundle.output`. Simple but very powerful.
+This is a bundler plugin for use with [Bundles](https://github.com/brikcss/bundles-core) which filters files for use with other bundlers.
 
 ## Environment support
 
@@ -45,25 +45,62 @@ npm install @bundles/bundles-filter -D
 
 ## Usage
 
-See [configuring Bundles](https://github.com/brikcss/bundles-core#configuration) for how to configure Bundles and bundlers.
+See [configuring Bundles](https://github.com/brikcss/bundles-core#configuration) for details on configuring Bundles and bundlers.
 
-### The `filters` Array
+### `filters`
 
-`bundles-filter` has only one configuration option: `filters`. `filters` contains `filter` Objects, and can be a single `filter` `Object` or an Array of Objects. Either way, each `filter` will do one of the following:
+`filters` is the only configuration option. It allows you to create one or more `filter`s, each which do one of the following:
 
 1. _Permanently_ remove specified output files from `bundle.output`.
 2. Run a series of bundlers on a _temporarily_ filtered subset of output files from `bundle.output`. _NOTE: This does not remove anything from `bundle.output`, the filter only applies temporarily while the configured bundlers run._
 
-Each filter can be configured with the following properties:
+### `filter`
 
-- **`pattern`** _{String|String[]|Function}_ _(required)_ Use glob pattern(s) to test against each input source path. If the path matches, it will be included in the filter. Or you may pass a custom Function for more flexibility. Custom functions receive `file`, `bundle`, and `micromatch` as parameters, and must return a Boolean to tell Bundles if a file should be added to the filter. For example:
+**Properties:**
+
+- `pattern` **{String|String[]|Function}** _(required)_ Use glob pattern(s) to test against each input source path. If the path matches, it will be included in the filter. Or you may pass a custom Function for more flexibility. Custom functions receive `file`, `bundle`, and `micromatch` as parameters, and must return a Boolean to tell Bundles if a file should be added to the filter. For example:
   ```js
   function myCustomFilter(file, { bundle, micromatch: mm }) {
     // Return `true` to add to filter.
     return true;
   }
   ```
-- **`type`** _{string}_ _Default: `'some'`_ [micromatch](https://github.com/micromatch/micromatch) is used to test filter patterns. By default, the `micromatch.some()` method is used to test. You may tweak the behavior to your liking by passing `'every'`, `'any'`, `'all'`, `'not'`, or `'contains'` to use the corresponding micromatch method.
-- **`options`** _{Object}_ Options passed directly to [micromatch](https://github.com/micromatch/micromatch).
-- **`reverse`** _{Boolean}_ When true, files that do NOT match `filter.pattern` will be added to the filter.
-- **`bundlers`** _{Object[]}_ When this property exists, files that match the filter will be run through these bundlers. This is useful to run certain bundlers only on a subset of a larger grouping of files. The `bundlers` property can be configured exactly like bundlers in `bundle.bundlers`. See [configuring Bundles](https://github.com/brikcss/bundles-core#configuration) for more details.
+- `type` **{string}** _Default: `'some'`_ [micromatch](https://github.com/micromatch/micromatch) is used to test filter patterns. By default, the `micromatch.some()` method is used to test. You may tweak the behavior to your liking by passing `'every'`, `'any'`, `'all'`, `'not'`, or `'contains'` to use the corresponding micromatch method.
+- `options` **{Object}** Options passed directly to [micromatch](https://github.com/micromatch/micromatch).
+- `reverse` **{Boolean}** When true, files that do NOT match `filter.pattern` will be added to the filter.
+- `bundlers` **{Object[]}** When this property exists, files that match the filter will be run through these bundlers. This is useful to run certain bundlers only on a subset of a larger grouping of files. The `bundlers` property can be configured exactly like bundlers in `bundle.bundlers`. See [configuring Bundles](https://github.com/brikcss/bundles-core#configuration) for more details.
+
+### Example:
+
+```js
+bundlers: [
+  {
+    run: require('@bundles/bundles-filter'),
+    filters: [
+      {
+        // These files will be removed permanently.
+        pattern: ['!*.yaml'],
+      },
+      {
+        // All other filters will run their matching subset of files through
+        // the configured bundlers, after which the original `bundle.output`
+        // (minus the removed files) is restored.
+        pattern: ['{one,two,three}.md'],
+        bundlers: [markdown, footer],
+      },
+      {
+        pattern: ['*.css'],
+        bundlers: [css],
+      },
+      {
+        pattern: ['*.{css,js}', '!three.js'],
+        bundlers: [banner, footer],
+      },
+      {
+        pattern: ['*.json'],
+        bundlers: [json],
+      },
+    ],
+  },
+];
+```

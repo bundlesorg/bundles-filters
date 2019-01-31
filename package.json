@@ -2,20 +2,20 @@
   "name": "@bundles/bundles-filters",
   "version": "0.0.1",
   "description": "A bundler plugin for Bundles which allows you to create a series of dynamic filters to run through other bundlers.",
-  "keywords": ["brikcss", "bundles", "bundler", "filter"],
+  "keywords": ["brikcss", "bundles", "bundler", "filters"],
   "license": "MIT",
   "author": "Brikcss <https://github.com/brikcss>",
   "contributors": ["The Zimmee <thezimmee@gmail.com>"],
-  "homepage": "https://github.com/brikcss/bundles-filter",
+  "homepage": "https://github.com/brikcss/bundles-filters",
   "repository": {
     "type": "git",
-    "url": "https://github.com/brikcss/bundles-filter.git"
+    "url": "https://github.com/brikcss/bundles-filters.git"
   },
   "bugs": {
-    "url": "https://github.com/brikcss/bundles-filter/issues"
+    "url": "https://github.com/brikcss/bundles-filters/issues"
   },
   "files": ["lib"],
-  "main": "./lib/bundles-filter.min.js",
+  "main": "./lib/bundles-filters.min.js",
   "publishConfig": {
     "tag": "dev",
     "access": "public"

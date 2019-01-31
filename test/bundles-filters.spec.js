@@ -1,7 +1,7 @@
 /* eslint-env jest */
 const log = require('loglevel')
 const bundle = require('@bundles/core')
-const filter = require('../lib/bundles-filter.js')
+const filter = require('../lib/bundles-filters.js')
 
 log.setLevel('silent')
 
@@ -38,9 +38,9 @@ test('reverse filter and remove files', () => {
     const output = result.bundles[0].output
     expect(result.success).toBe(true)
     expect(output.length).toBe(5)
-    expect(output[0].source.path).toBe('lib/bundles-filter.js')
-    expect(output[1].source.path).toBe('lib/bundles-filter.min.js')
-    expect(output[2].source.path).toBe('test/bundles-filter.spec.js')
+    expect(output[0].source.path).toBe('lib/bundles-filters.js')
+    expect(output[1].source.path).toBe('lib/bundles-filters.min.js')
+    expect(output[2].source.path).toBe('test/bundles-filters.spec.js')
     expect(output[3].source.path).toBe('README.md')
     expect(output[4].source.path).toBe('package-lock.json')
   })

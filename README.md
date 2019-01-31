@@ -9,8 +9,8 @@
     <!-- Travis branch. -->
     <a href="https://github.com/brikcss/bundles-filter/tree/master"><img alt="Travis branch" src="https://img.shields.io/travis/rust-lang/rust/master.svg?style=flat-square&label=master"></a>
     <!-- Codacy. -->
-    <a href="https://www.codacy.com/app/thezimmee/bundles-filter"><img alt="Codacy code grade" src="https://img.shields.io/codacy/grade/bc437a7cecb3437cab90793ba37a42e3/master.svg?style=flat-square"></a>
-    <a href="https://www.codacy.com/app/thezimmee/bundles-filter"><img alt="Codacy coverage" src="https://img.shields.io/codacy/coverage/bc437a7cecb3437cab90793ba37a42e3/master.svg?style=flat-square"></a>
+    <a href="https://www.codacy.com/app/thezimmee/bundles-filter"><img alt="Codacy code grade" src="https://img.shields.io/codacy/grade/894fa451daf842ea98aac96393484360/master.svg?style=flat-square"></a>
+    <a href="https://www.codacy.com/app/thezimmee/bundles-filter"><img alt="Codacy coverage" src="https://img.shields.io/codacy/coverage/894fa451daf842ea98aac96393484360/master.svg?style=flat-square"></a>
     <!-- Coveralls -->
     <a href='https://coveralls.io/github/brikcss/bundles-filter?branch=master'><img src='https://img.shields.io/coveralls/github/brikcss/bundles-filter/master.svg?style=flat-square' alt='Coverage Status' /></a>
     <!-- JS Standard style. -->

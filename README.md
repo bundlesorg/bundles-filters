@@ -1,18 +1,18 @@
-# Bundles Filter Bundler
+# Bundles Filters Bundler
 
 <!-- Shields. -->
 <p>
     <!-- NPM version. -->
-    <a href="https://www.npmjs.com/package/@bundles/bundles-filter"><img alt="NPM version" src="https://img.shields.io/npm/v/@bundles/bundles-filter.svg?style=flat-square"></a>
+    <a href="https://www.npmjs.com/package/@bundles/bundles-filters"><img alt="NPM version" src="https://img.shields.io/npm/v/@bundles/bundles-filters.svg?style=flat-square"></a>
     <!-- NPM downloads/month. -->
-    <a href="https://www.npmjs.com/package/@bundles/bundles-filter"><img alt="NPM downloads per month" src="https://img.shields.io/npm/dm/@bundles/bundles-filter.svg?style=flat-square"></a>
+    <a href="https://www.npmjs.com/package/@bundles/bundles-filters"><img alt="NPM downloads per month" src="https://img.shields.io/npm/dm/@bundles/bundles-filters.svg?style=flat-square"></a>
     <!-- Travis branch. -->
-    <a href="https://github.com/brikcss/bundles-filter/tree/master"><img alt="Travis branch" src="https://img.shields.io/travis/rust-lang/rust/master.svg?style=flat-square&label=master"></a>
+    <a href="https://github.com/brikcss/bundles-filters/tree/master"><img alt="Travis branch" src="https://img.shields.io/travis/rust-lang/rust/master.svg?style=flat-square&label=master"></a>
     <!-- Codacy. -->
-    <a href="https://www.codacy.com/app/thezimmee/bundles-filter"><img alt="Codacy code grade" src="https://img.shields.io/codacy/grade/894fa451daf842ea98aac96393484360/master.svg?style=flat-square"></a>
-    <a href="https://www.codacy.com/app/thezimmee/bundles-filter"><img alt="Codacy coverage" src="https://img.shields.io/codacy/coverage/894fa451daf842ea98aac96393484360/master.svg?style=flat-square"></a>
+    <a href="https://www.codacy.com/app/thezimmee/bundles-filters"><img alt="Codacy code grade" src="https://img.shields.io/codacy/grade/894fa451daf842ea98aac96393484360/master.svg?style=flat-square"></a>
+    <a href="https://www.codacy.com/app/thezimmee/bundles-filters"><img alt="Codacy coverage" src="https://img.shields.io/codacy/coverage/894fa451daf842ea98aac96393484360/master.svg?style=flat-square"></a>
     <!-- Coveralls -->
-    <a href='https://coveralls.io/github/brikcss/bundles-filter?branch=master'><img src='https://img.shields.io/coveralls/github/brikcss/bundles-filter/master.svg?style=flat-square' alt='Coverage Status' /></a>
+    <a href='https://coveralls.io/github/brikcss/bundles-filters?branch=master'><img src='https://img.shields.io/coveralls/github/brikcss/bundles-filters/master.svg?style=flat-square' alt='Coverage Status' /></a>
     <!-- JS Standard style. -->
     <a href="https://standardjs.com"><img alt="JavaScript Style Guide" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square"></a>
     <!-- Prettier code style. -->
@@ -24,7 +24,7 @@
     <!-- MIT License. -->
     <a href="https://choosealicense.com/licenses/mit/"><img alt="License" src="https://img.shields.io/npm/l/express.svg?style=flat-square"></a>
     <!-- Greenkeeper. -->
-    <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/brikcss/bundles-filter.svg?style=flat-square" alt="Greenkeeper badge"></a>
+    <a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/brikcss/bundles-filters.svg?style=flat-square" alt="Greenkeeper badge"></a>
 </p>
 
 This is a bundler plugin for use with [Bundles](https://github.com/brikcss/bundles-core) which filters files for use with other bundlers.
@@ -40,7 +40,7 @@ This is a bundler plugin for use with [Bundles](https://github.com/brikcss/bundl
 Make sure [Bundles is installed](https://github.com/brikcss/bundles-core#install).
 
 ```sh
-npm install @bundles/bundles-filter -D
+npm install @bundles/bundles-filters -D
 ```
 
 ## Usage
@@ -75,7 +75,7 @@ See [configuring Bundles](https://github.com/brikcss/bundles-core#configuration)
 ```js
 bundlers: [
   {
-    run: require('@bundles/bundles-filter'),
+    run: require('@bundles/bundles-filters'),
     filters: [
       {
         // These files will be removed permanently.

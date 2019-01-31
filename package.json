@@ -1,6 +1,6 @@
 {
   "name": "@bundles/bundles-filters",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A bundler plugin for Bundles which allows you to create a series of dynamic filters to run through other bundlers.",
   "keywords": ["brikcss", "bundles", "bundler", "filters"],
   "license": "MIT",

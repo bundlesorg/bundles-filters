@@ -26,7 +26,7 @@ test('permanently remove files from bundle', () => {
 })
 
 test('reverse filter and remove files', () => {
-  expect.assertions(6)
+  expect.assertions(7)
   return bundle({ bundles: [{
     id: 'reverse',
     input: ['lib/**', 'test/**', '*.{md,json}'],
@@ -35,12 +35,14 @@ test('reverse filter and remove files', () => {
       filters: [{ pattern: ['package.json'], reverse: true }]
     }]
   }] }).then(result => {
+    const output = result.bundles[0].output
     expect(result.success).toBe(true)
-    expect(result.bundles[0].output.length).toBe(4)
-    expect(result.bundles[0].output[0].source.path).toBe('lib/bundles-filter.js')
-    expect(result.bundles[0].output[1].source.path).toBe('test/bundles-filter.spec.js')
-    expect(result.bundles[0].output[2].source.path).toBe('README.md')
-    expect(result.bundles[0].output[3].source.path).toBe('package-lock.json')
+    expect(output.length).toBe(5)
+    expect(output[0].source.path).toBe('lib/bundles-filter.js')
+    expect(output[1].source.path).toBe('lib/bundles-filter.min.js')
+    expect(output[2].source.path).toBe('test/bundles-filter.spec.js')
+    expect(output[3].source.path).toBe('README.md')
+    expect(output[4].source.path).toBe('package-lock.json')
   })
 })
 

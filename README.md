@@ -33,7 +33,7 @@ This is a bundler plugin for use with [Bundles](https://github.com/brikcss/bundl
 
 | Node | CLI | ES Module | Browser | UMD |
 | :--: | :-: | :-------: | :-----: | :-: |
-|  ✓   |  ✓  |     x     |    x    |  x  |
+|  ✓   |  ✓  |     ✓     |    x    |  x  |
 
 ## Install
 
@@ -73,34 +73,37 @@ See [configuring Bundles](https://github.com/brikcss/bundles-core#configuration)
 ### Example:
 
 ```js
-bundlers: [
-  {
-    run: require('@bundles/bundles-filters'),
-    filters: [
-      {
-        // These files will be removed permanently.
-        pattern: ['!*.yaml'],
-      },
-      {
-        // All other filters will run their matching subset of files through
-        // the configured bundlers, after which the original `bundle.output`
-        // (minus the removed files) is restored.
-        pattern: ['{one,two,three}.md'],
-        bundlers: [markdown, footer],
-      },
-      {
-        pattern: ['*.css'],
-        bundlers: [css],
-      },
-      {
-        pattern: ['*.{css,js}', '!three.js'],
-        bundlers: [banner, footer],
-      },
-      {
-        pattern: ['*.json'],
-        bundlers: [json],
-      },
-    ],
-  },
-];
+const bundle = {
+  input: [...],
+  bundlers: [
+    {
+      run: require('@bundles/bundles-filters'),
+      filters: [
+        {
+          // These files will be removed permanently.
+          pattern: ['!*.yaml'],
+        },
+        {
+          // All other filters will run their matching subset of files through
+          // the configured bundlers, after which the original `bundle.output`
+          // (minus the removed files) is restored.
+          pattern: ['{one,two,three}.md'],
+          bundlers: [markdown, footer],
+        },
+        {
+          pattern: ['*.css'],
+          bundlers: [css],
+        },
+        {
+          pattern: ['*.{css,js}', '!three.js'],
+          bundlers: [banner, footer],
+        },
+        {
+          pattern: ['*.json'],
+          bundlers: [json],
+        },
+      ],
+    },
+  ];
+}
 ```

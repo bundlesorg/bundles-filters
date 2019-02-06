@@ -1,6 +1,6 @@
 {
   "name": "@bundles/bundles-filters",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A bundler plugin for Bundles which allows you to create a series of dynamic filters to run through other bundlers.",
   "keywords": ["brikcss", "bundles", "bundler", "filters"],
   "license": "MIT",
@@ -14,25 +14,31 @@
   "bugs": {
     "url": "https://github.com/brikcss/bundles-filters/issues"
   },
-  "files": ["lib"],
-  "main": "./lib/bundles-filters.min.js",
+  "files": ["lib", "module"],
+  "main": "./lib/bundles-filters.js",
+  "module": "./module/bundles-filters.js",
   "publishConfig": {
     "tag": "dev",
     "access": "public"
   },
   "scripts": {
     "start": "npm run watch",
+    "pretest": "npm run build",
     "test": "standard *.js && jest --coverage && cat coverage/lcov.info | coveralls && cat coverage/lcov.info | codacy-coverage",
-    "unit": "jest",
-    "watch": "jest --watchAll"
+    "unit": "jest --config=.jestrc.js",
+    "prebuild": "npx rimraf {lib,module}",
+    "build": "rollup --config=.rolluprc.js",
+    "watch": "npx concurrently \"npm run unit -- --watchAll\" \"npm run build -- --watch\""
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.3.1",
     "@brikcss/git-hooks": "^2.1.0",
-    "@node-minify/cli": "^4.1.0",
-    "@node-minify/uglify-es": "^4.0.5",
     "codacy-coverage": "^3.3.0",
     "coveralls": "^3.0.2",
     "jest": "^24.0.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-terser": "^4.0.4",
     "semantic-release": "^15.12.0"
   },
   "dependencies": {

@@ -1,9 +1,9 @@
 /*! bundles-filters.js | @author brikcss <https://github.com/brikcss> | @reference <https://github.com/brikcss/bundles-filters> */
 
-const mm = require('micromatch')
-const bundles = require('@bundles/core')
+import mm from 'micromatch'
+import bundles from '@bundles/core'
 
-module.exports = (bundle = {}, bundler = {}) => {
+export default (bundle = {}, bundler = {}) => {
   // Validate that `bundler.filters` is an Object or Object[].
   if (bundler.filters instanceof Object && bundler.filters.constructor === Object) bundler.filters = [bundler.filters]
   if (!(bundler.filters instanceof Array)) {

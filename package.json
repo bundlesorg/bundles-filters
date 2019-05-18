@@ -1,6 +1,6 @@
 {
   "name": "@bundles/bundles-filters",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A bundler plugin for Bundles which allows you to create a series of dynamic filters to run through other bundlers.",
   "keywords": ["brikcss", "bundles", "bundler", "filters"],
   "license": "MIT",
@@ -40,11 +40,10 @@
     "rimraf": "^2.6.3",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-terser": "^4.0.4",
-    "semantic-release": "^15.13.14"
+    "rollup-plugin-terser": "^4.0.4"
   },
   "dependencies": {
-    "@bundles/core": "^0.8.2",
-    "micromatch": "^3.1.10"
+    "@bundles/core": "^0.9.1",
+    "micromatch": "^4.0.2"
   }
 }

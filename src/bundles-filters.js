@@ -9,8 +9,6 @@ export default (bundle = {}, bundler = {}) => {
     bundle.errors.push(new Error(`[${bundle.id}] Skipped \`bundles-filter\` bundler. \`bundler.filters\` must be an Object or Array of Objects or Arrays.`))
     return bundle
   }
-  // Cache original bundlers.
-  const originalBundlers = bundle.bundlers.slice(0)
   // Reduce filters to promises, iterate through each one in order, and return bundle.
   return bundler.filters.reduce((promise, filter, filterIndex) => {
     return promise.then(bundle => {
@@ -27,8 +25,8 @@ export default (bundle = {}, bundler = {}) => {
       // Get filtered output.
       const filteredOutput = Array.from(bundle.output).reduce((map, file) => {
         let isMatch = typeof filter.pattern === 'function'
-          ? filter.pattern(file[1], { bundle, micromatch: mm })
-          : mm[['every', 'any', 'all', 'not', 'contains', 'some'].includes(filter.type) ? filter.type : 'some'](file[0], filter.pattern, filter.options || {})
+          ? filter.pattern(file[1])
+          : mm[['every', 'any', 'all', 'not', 'contains', 'some'].includes(filter.type) ? filter.type : 'all'](file[0], filter.pattern, filter.options || {})
           // Reverse the filter if `reverse` is true.
         if (filter.reverse) isMatch = !isMatch
         // Remove files that match.
@@ -38,26 +36,12 @@ export default (bundle = {}, bundler = {}) => {
       // If `bundlers` exists, run them.
       if (filter.bundlers instanceof Array && filter.bundlers.length) {
         // Normalize `bundlers`.
-        filter.bundlers = filter.bundlers.map(bundler => {
-          if (typeof bundler !== 'object') return { run: bundler }
-          if (typeof bundler.run === 'string') {
-            try {
-              bundler.run = require(bundler)
-            } catch (error) {
-              console.error(`Error importing ${bundler}:`, error)
-            }
-          }
-          bundler.valid = true
-          bundler.success = true
-          return bundler
-        })
+        filter.bundlers = bundle.resolveBundlers(filter.bundlers)
         // Run filtered output with its bundlers.
         const originalOutput = bundle.output
-        bundle.bundlers = filter.bundlers
         bundle.output = filteredOutput
-        return bundle.run().then(bundle => {
+        return bundle.run({ bundlers: filter.bundlers }).then(bundle => {
           // Reset original bundle data.
-          bundle.bundlers = originalBundlers
           bundle.output = originalOutput
           return bundle
         }).catch(error => console.error('FILTERS ERROR:', error))

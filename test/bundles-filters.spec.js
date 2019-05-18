@@ -2,6 +2,7 @@
 const log = require('loglevel')
 const bundle = require('@bundles/core')
 const filter = require('../lib/bundles-filters.js')
+const micromatch = require('micromatch')
 
 log.setLevel('silent')
 
@@ -52,7 +53,7 @@ test('`pattern` as custom Function', () => {
     input: ['lib/**', 'test/**', '*.{md,json}'],
     bundlers: [{
       run: filter,
-      filters: [(file, { micromatch }) => micromatch.all(file.source.path, ['*.md'])]
+      filters: [(file) => micromatch.all(file.source.path, ['*.md'])]
     }]
   }] }).then(result => {
     expect(result.success).toBe(true)
@@ -61,7 +62,7 @@ test('`pattern` as custom Function', () => {
   })
 })
 
-test.skip('run multiple filters with `bundlers`', () => {
+test('run multiple filters with `bundlers`', () => {
   expect.assertions(18)
   return bundle.run({ bundles: [{
     id: 'tasks',
@@ -127,46 +128,41 @@ function footer (bundle) {
     css: ['/* ', ' */'],
     js: ['/* ', ' */']
   }
-  bundle.output = bundle.output.map(output => {
-    const ext = path.extname(output.source.path).replace('.', '')
-    output.content += '\n\n' + (tags[ext] ? tags[ext][0] : '') + 'I am a ' + (typeMap[ext] ? typeMap[ext] : ext.toUpperCase()) + ' file.' + (tags[ext] ? tags[ext][1] : '') + '\n'
-    return output
+  bundle.output.forEach(file => {
+    const ext = path.extname(file.source.path).replace('.', '')
+    file.content += '\n\n' + (tags[ext] ? tags[ext][0] : '') + 'I am a ' + (typeMap[ext] ? typeMap[ext] : ext.toUpperCase()) + ' file.' + (tags[ext] ? tags[ext][1] : '') + '\n'
   })
   return bundle
 }
 
 function banner (bundle) {
   const path = require('path')
-  bundle.output = bundle.output.map(output => {
-    output.content = '/* ' + path.basename(output.source.path) + ' */\n\n' + output.content
-    return output
+  bundle.output.forEach(file => {
+    file.content = '/* ' + path.basename(file.source.path) + ' */\n\n' + file.content
   })
   return bundle
 }
 
 function markdown (bundle) {
-  bundle.output = bundle.output.map(output => {
-    output.content += ' Aren\'t I cool?'
-    return output
+  bundle.output.forEach(file => {
+    file.content += ' Aren\'t I cool?'
   })
   return bundle
 }
 
 function css (bundle) {
-  bundle.output = bundle.output.map(output => {
-    output.content += '\n\n.my-dynamic-selector { display: block; }'
-    return output
+  bundle.output.forEach(file => {
+    file.content += '\n\n.my-dynamic-selector { display: block; }'
   })
   return bundle
 }
 
 function json (bundle) {
-  bundle.output = bundle.output.map(output => {
-    const json = JSON.parse(output.content)
+  bundle.output.forEach(file => {
+    const json = JSON.parse(file.content)
     json.four = 4
     json.type = 'json'
-    output.content = JSON.stringify(json)
-    return output
+    file.content = JSON.stringify(json)
   })
   return bundle
 }

@@ -14,6 +14,7 @@ const isProd = ['production', 'test'].includes(process.env.NODE_ENV)
 // Set base options.
 const base = {
   input: 'src/bundles-filters.js',
+  external: [...Object.keys(pkg.dependencies)],
   watch: {
     chokidar: true,
     include: 'src/**',
@@ -27,7 +28,6 @@ const base = {
 //
 
 let configs = {
-  input: base.input,
   output: [
     // Node / CommonJS module.
     {
@@ -49,12 +49,11 @@ let configs = {
       }]]
     }),
     isProd && uglify()
-  ],
-  watch: base.watch
+  ]
 }
 
 // -------------------------------------------------------------------------------------------------
 // Exports.
 //
 
-export default configs
+export default Object.assign({}, base, configs)

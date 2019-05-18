@@ -60,7 +60,7 @@ See [configuring Bundles](https://github.com/brikcss/bundles-core#configuration)
 
 - `pattern` **{String|String[]|Function}** _(required)_ Use glob pattern(s) to test against each input source path. If the path matches, it will be included in the filter. Or you may pass a custom Function for more flexibility. Custom functions receive `file`, `bundle`, and `micromatch` as parameters, and must return a Boolean to tell Bundles if a file should be added to the filter. For example:
   ```js
-  function myCustomFilter(file, { bundle, micromatch: mm }) {
+  function myCustomFilter(file, { bundle, micromatch }) {
     // Return `true` to add to filter.
     return true;
   }
@@ -91,7 +91,8 @@ const bundle = {
           bundlers: [markdown, footer],
         },
         {
-          pattern: ['*.css'],
+          // Pattern can be a Function.
+          pattern: (file, { bundle, micromatch }) => path.extname(file.source.path) === '.css',
           bundlers: [css],
         },
         {
@@ -99,7 +100,7 @@ const bundle = {
           bundlers: [banner, footer],
         },
         {
-          pattern: ['*.json'],
+          pattern: '*.json',
           bundlers: [json],
         },
       ],
